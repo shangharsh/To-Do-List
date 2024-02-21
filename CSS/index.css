@@ -8,9 +8,15 @@
     padding: 0;
 }
 
+#listContainer{
+    max-height: 300px;
+    overflow: auto;
+}
+
+
 .main-container{
     padding-top: 10%;
-    height: 100%;
+    height: 100vh;
     background-image: linear-gradient(to bottom right, pink, aqua);
 }
 
@@ -48,8 +54,10 @@ header>.input-container{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: aqua;
+    background-color: #ffffff;
     margin-top: 5px;
+    padding: 5px;
+    border-radius: 4px;
 }
 
 .float-left{
@@ -63,4 +71,8 @@ header>.input-container{
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.float-right>span:hover{
+    cursor: pointer;
 }

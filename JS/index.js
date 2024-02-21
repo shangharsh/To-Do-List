@@ -3,6 +3,8 @@ let taskContainer = document.getElementById('listContainer');
 let checkBox = document.querySelectorAll('.checkBox');
 let pendingTask = document.querySelectorAll('task');
 let addBtn = document.getElementById('addBtn');
+const edit = document.getElementsByClassName('edit');
+const del = document.getElementsByClassName('delete');
 let btnValue = addBtn.value;
 let taskArray = [];
 let edit_id = null;
@@ -16,7 +18,7 @@ if(prevTask){
 displayTask();
 
 const addTask = () => {
-    if(edit_id!= null && task.value!='' ){
+    if(edit_id!= null && task.value!=''){
         //edit
         taskArray.splice(edit_id,1,{'task' : task.value});
         edit_id = null;
@@ -42,18 +44,18 @@ function displayTask() {
             taskArray.forEach((tasks, i) => {
                 taskList += `<li class="d-flex" id='${i}'>
                 <div class="float-left">
-                    <input type="checkbox" class='checkBox' name="checkBox" id='${i}')'>
+                    <input type="checkbox" class='checkBox' name="checkBox" id='${i}' onclick='lineThrough(${i})')'>
 
                     ${checkBox.checked?
-                        `<p class='mb-0 task'><s>${tasks.task}</s></p>`
+                        `<p class='mb-0 task ms-1 me-1'><s>${tasks.task}</s></p>`
                     :
-                        `<p class='mb-0 task'>${tasks.task}</p>`
+                        `<p class='mb-0 task ms-1 me-1'>${tasks.task}</p>`
                     }
 
                 </div>
                 <div class="float-right">
-                    <p class='mb-0 me-1' onclick='editTask(${i})'>Edit</p>
-                    <p class='mb-0' onclick='deleteTask(${i})'>Delete</p>
+                    <span onclick='editTask(${i})'><button class=' btn btn-primary edit material-symbols-outlined ms-1 me-1'>edit_note</button></span>
+                    <span onclick='deleteTask(${i})'><button class=' btn btn-danger delete material-symbols-outlined ms-1 me-1'>delete</button></span>
                 </div>
             </li>`;
             taskContainer.innerHTML = taskList;
@@ -63,20 +65,24 @@ function displayTask() {
         }
 }
 
-// const lineThrough = (i) => {
-//     // taskArray.forEach(item =>{
-//     //     alert(item);
-//     // })
-//     // alert(taskArray.length)
 
-//     // alert(pendingTask)
-//     // alert(i)
-//     // alert(li[i]);
-//     // li[i].style.textDecorationLine = 'line-through';
-//     // taskArray[i].style.textDecorationLine = 'line-through';
+const lineThrough = () =>{
+    let paragraph = document.getElementsByClassName('task');
+    let checkbox = document.getElementsByClassName('checkBox');
+    
 
-// }
-
+    for(let i =0; i<checkbox.length; i++){
+        if(checkbox[i].checked){
+            paragraph[i].style.textDecorationLine = "line-through";
+            edit[i].disabled = true;
+            del[i].disabled = true;
+        }else{
+            paragraph[i].style.textDecorationLine = "none";
+            edit[i].disabled = false;
+            del[i].disabled = false;
+        }
+    }
+}
 
 const editTask = (i) => {
     // alert(i)
@@ -86,6 +92,6 @@ const editTask = (i) => {
 }
 
 const deleteTask = (i) => {
-    taskArray.splice(i,1);
-    saveTask(taskArray);
+        taskArray.splice(i,1);
+        saveTask(taskArray);
 }
